@@ -73,7 +73,7 @@ import java.util.Arrays;
                         break;
                         
                     case ')':
-                        if(i==0 || operadores.contains(cadena.charAt(i-1)) || cadena.charAt(i-1)=='(' || aux.isEmpty())//|| cadena.charAt(i+1)!='+'|| cadena.charAt(i+1)!='-'|| cadena.charAt(i+1)=='('
+                        if(i==0 || operadores.contains(cadena.charAt(i-1)) || cadena.charAt(i-1)=='(')//|| cadena.charAt(i+1)!='+'|| cadena.charAt(i+1)!='-'|| cadena.charAt(i+1)=='('
                             error= "ERROR EN ) ["+i+1+"]";
                             
                    
