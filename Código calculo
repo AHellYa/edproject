@@ -1,0 +1,96 @@
+
+
+/**
+ *
+ * @author Ernesto Palma
+ */
+public class Calculadora {
+    private String expresion;
+    private double resul;
+    
+    public Calculadora(){
+        
+    }
+    public Calculadora(String expresion){
+        this.expresion = expresion;
+    }
+    public static boolean esNumero(String dato){
+        return !dato.equals("+") && !dato.equals("-") && !dato.equals("*") && !dato.equals("/");
+    }
+    public boolean texto(){
+        boolean respuesta;
+        int i=0;
+        PilaADT<Character> exp = new PilaA();
+        respuesta = true;
+        while (i<expresion.length() && respuesta){
+            if (expresion.charAt(i) == '(')
+                exp.push(expresion.charAt(i));
+            else
+                if (expresion.charAt(i)== ')')
+                    if (exp.isEmpty())
+                        respuesta = false;
+                    else
+                        exp.pop();
+            i++;
+        }
+        return respuesta;
+    }
+    public static String agregaUnToken(String str, char a){
+	if(Character.isDigit(a) || a=='.'){
+		str=str + a;		 
+	}else if(a== 'x' || a=='/' || a=='-' || a=='+' || a=='(' || a == ')') {
+		str=str + " " + a + " "; 
+	}
+	return str;
+   }
+    public int jerarquia(String dato){
+        int resultado = 0;
+        switch (dato.charAt(0)) {
+            case '+':
+            case '-': resultado = 1;
+                
+                break;
+            case '*':
+            case '/': resultado = 2;
+        }
+        return resultado;
+    }
+    public double calculo(String resp[]){
+        PilaADT<Double> expre = new PilaA();
+        double resultado,valor1,valor2;
+        int n = 0;
+        resultado = 0;
+        while (n<resp.length && resp[n] != null){
+            if (esNumero(resp[n]))
+                expre.push(Double.valueOf(resp[n]));
+            else{
+                valor1 = expre.pop();
+                valor2 = expre.pop();
+                switch (resp[n].charAt(0)){
+                    case '+': resultado = valor1 + valor2;
+                        break;
+                    case '-': resultado = valor1 - valor2;
+                        break;
+                    case '*': resultado = valor1 * valor2;
+                        break;
+                    case '/': if(valor2 == 0)
+                                    throw new RuntimeException();
+                                resultado = valor1/valor2;
+                }
+                expre.push(resultado);
+                }
+            n++;
+        }
+        return expre.pop();
+        }
+    public double resultado(){
+        PilaA<String> respu= new PilaA();
+        if (texto()== true){
+            respu = ConversorPostfija.convertirAPostfija(expresion);
+            resul = calculo(respu.convierte());
+        }
+        return resul;
+    }
+    
+        
+}
