@@ -1,5 +1,3 @@
-
-
 package calculadora;
 
 import java.util.ArrayList;
@@ -44,7 +42,7 @@ import java.util.Arrays;
                 // Suma y resta 
                     case '+':
                     case '-':
-                        if(i==0 || i==cadena.length()-1 || operadores.contains(cadena.charAt(i+1))|| operadores.contains(cadena.charAt(i-1))||  cadena.charAt(i+1)!='(' || cadena.charAt(i+1)!=')')
+                        if(i==0 || i==cadena.length()-1 || operadores.contains(cadena.charAt(i+1))|| operadores.contains(cadena.charAt(i-1))||  cadena.charAt(i+1)=='(' || cadena.charAt(i+1)==')')
                             error="ERROR EN SUMA O SUBTRACCION ["+i+1+"]";
                             
                         
@@ -53,27 +51,27 @@ import java.util.Arrays;
                 // Multiplicación y división        
                     case '*':
                     case '/':
-                        if(i==0 || i==cadena.length()-1 || operadores.contains(cadena.charAt(i+1)) || operadores.contains(cadena.charAt(i-1)) || cadena.charAt(i-1)!='(' || cadena.charAt(i+1)!=')')
+                        if(i==0 || i==cadena.length()-1 || operadores.contains(cadena.charAt(i+1)) || operadores.contains(cadena.charAt(i-1)) || cadena.charAt(i-1)=='(' || cadena.charAt(i+1)==')')
                            error="ERROR EN MULTIPLICACION DIVISION O EXPONENCIAL ["+i+1+"]";
                             
                         break; 
                         
                  //Número negativo       
                     case '~':
-                        if(i==cadena.length()-1 || cadena.charAt(i+1)=='(' || cadena.charAt(i+1)==')' || operadores.contains(cadena.charAt(i+1)) || cadena.charAt(i+1)=='~' || (i!=0 && !operadores.contains(cadena.charAt(i-1)) && cadena.charAt(i-1)!='('))
+                        if(i==cadena.length()-1 || cadena.charAt(i+1)=='(' || cadena.charAt(i+1)==')' || operadores.contains(cadena.charAt(i+1)) || cadena.charAt(i+1)=='~' || (i!=0 && !operadores.contains(cadena.charAt(i-1)) && cadena.charAt(i-1)=='('))
                             error="ERROR EN ~ ["+i+1+"]";
                          
                         break;
                       
                  //Paréntesis       
                     case '(':
-                        if( i == 0 || i==cadena.length()-1  || !operadores.contains(cadena.charAt(i+1)) || cadena.charAt(i+1)!=')' )
+                        if( i == 0 || i==cadena.length()-1  || !operadores.contains(cadena.charAt(i+1)) || cadena.charAt(i+1)==')' )
                             error="ERROR EN ( ["+ i+1 +"]";
                           
                         break;
                         
                     case ')':
-                        if(i==0 || operadores.contains(cadena.charAt(i-1)) || cadena.charAt(i-1)=='(')//|| cadena.charAt(i+1)!='+'|| cadena.charAt(i+1)!='-'|| cadena.charAt(i+1)=='('
+                        if(i==0 || operadores.contains(cadena.charAt(i-1)) || cadena.charAt(i-1)=='('|| cadena.charAt(i+1)!='+'|| cadena.charAt(i+1)!='-'|| cadena.charAt(i+1)=='(')
                             error= "ERROR EN ) ["+i+1+"]";
                             
                    
@@ -123,7 +121,3 @@ import java.util.Arrays;
             return error;
         
     }
-
-    
-
-
