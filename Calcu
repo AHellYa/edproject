@@ -332,7 +332,7 @@ public class Calcul extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton8ActionPerformed
 
     private void jButton10ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton10ActionPerformed
-        jLabel1.setText(jLabel1.getText()+"-"); // estamos poniendo en la pantalla el símbolo de -
+        jLabel1.setText(jLabel1.getText()+"-"); // estamos poniendo en la pantalla el símbolo de substracción 
     }//GEN-LAST:event_jButton10ActionPerformed
 
     private void jButton15ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton15ActionPerformed
@@ -348,7 +348,7 @@ public class Calcul extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton13ActionPerformed
 
     private void jButton14ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton14ActionPerformed
-        jLabel1.setText(jLabel1.getText()+"(-)"); // estamos poniendo en la pantalla el símbolo de (-)
+        jLabel1.setText(jLabel1.getText()+"~"); // estamos poniendo en la pantalla el símbolo de ~ que lo usaremos para señalizar que es para un número negativo 
     }//GEN-LAST:event_jButton14ActionPerformed
 
     private void jButton12ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton12ActionPerformed
