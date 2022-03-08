@@ -326,13 +326,15 @@ public class Calcul extends javax.swing.JFrame {
     }                                        
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {                                         
-        try{
         Calculadora a = new Calculadora(jLabel1.getText());
+        try{
         jLabel1.setText(a.resultado2());
         }catch(Exception e){
-            jLabel1.setText("ERROR");    
-        }
-    }                                        
+        jLabel1.setText(revSintax(a.resultado2()));
+            
+       }
+    } 
+                                            
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {                                         
         jLabel1.setText(jLabel1.getText()+"8");
@@ -398,9 +400,7 @@ public class Calcul extends javax.swing.JFrame {
         jLabel1.setText(jLabel1.getText()+"3");
     }                                         
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {                                            
-        // TODO add your handling code here:
-    }                                           
+                                              
 
     /**
      * @param args the command line arguments
