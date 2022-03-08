@@ -1,0 +1,129 @@
+
+
+package calculadora;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
+
+
+   /**
+     * Metodo que evalua la sintaxis de una operacion 
+     * @author Alexander Hellberg Yanci
+     * @version 1.1
+     * @since 2022-02-28
+     * @param String cadena Operacion inserida por usuario
+     * @return String error o ""  En caso de error o en caso de ausencia de error
+     * <ul>
+     * <li>El metodo implementa diferentes operadores logicos al detectar errores o verificar validez  </li>
+     * </ul>
+     */
+
+ public static String revSintax(String cadena){
+       
+        //Parametro logico
+        String  error="";
+        
+     
+        // i+1 indica posicion del digito
+        int i=0;
+        
+        //Contadores de Parentesis
+        int contParIz=0, contParDer=0; 
+        
+        //Lista de los diferentes caracteres
+        ArrayList<Character> operadores =new ArrayList<>(Arrays.asList('+', '-', '*', '/'));
+        
+        
+        //Limitar verificacion al tamaño de la cadena y usar una bandera en caso de error
+        while(i<cadena.length() && error=="" ){
+            
+            //Switch para verificar el caso específico
+            switch (cadena.charAt(i)){
+                
+                // Suma y resta 
+                    case '+':
+                    case '-':
+                        if(i==0 || i==cadena.length()-1 || operadores.contains(cadena.charAt(i+1))|| operadores.contains(cadena.charAt(i-1))||  cadena.charAt(i+1)!='(' || cadena.charAt(i+1)!=')')
+                            error="ERROR EN SUMA O SUBTRACCION ["+i+1+"]";
+                            
+                        
+                        break;
+                        
+                // Multiplicación y división        
+                    case '*':
+                    case '/':
+                        if(i==0 || i==cadena.length()-1 || operadores.contains(cadena.charAt(i+1)) || operadores.contains(cadena.charAt(i-1)) || cadena.charAt(i-1)!='(' || cadena.charAt(i+1)!=')')
+                           error="ERROR EN MULTIPLICACION DIVISION O EXPONENCIAL ["+i+1+"]";
+                            
+                        break; 
+                        
+                 //Número negativo       
+                    case '~':
+                        if(i==cadena.length()-1 || cadena.charAt(i+1)=='(' || cadena.charAt(i+1)==')' || operadores.contains(cadena.charAt(i+1)) || cadena.charAt(i+1)=='~' || (i!=0 && !operadores.contains(cadena.charAt(i-1)) && cadena.charAt(i-1)!='('))
+                            error="ERROR EN ~ ["+i+1+"]";
+                         
+                        break;
+                      
+                 //Paréntesis       
+                    case '(':
+                        if( i == 0 || i==cadena.length()-1  || !operadores.contains(cadena.charAt(i+1)) || cadena.charAt(i+1)!=')' )
+                            error="ERROR EN ( ["+ i+1 +"]";
+                          
+                        break;
+                        
+                    case ')':
+                        if(i==0 || operadores.contains(cadena.charAt(i-1)) || cadena.charAt(i-1)=='(' || aux.isEmpty())//|| cadena.charAt(i+1)!='+'|| cadena.charAt(i+1)!='-'|| cadena.charAt(i+1)=='('
+                            error= "ERROR EN ) ["+i+1+"]";
+                            
+                   
+                    default:
+                        
+                        //Digito o punto decimal
+                        if(Character.isDigit(cadena.charAt(i)) || cadena.charAt(i)=='.' ){
+                            
+                            
+                            int dec=0;
+                            while((Character.isDigit(cadena.charAt(i)) || cadena.charAt(i)=='.' ) && i<cadena.length() && dec<2   && cadena.charAt(i)!='~'){
+                                
+                                if(cadena.charAt(i)=='.'){
+                                    dec++; 
+                                }
+                              
+                                i++; 
+                            }
+                            
+                            
+                            //Verificar que no hay dos puntos decimales
+                            if(dec==2 )
+                                error= "ERROR ["+i+1+"]"; 
+                            
+                        }
+                                               
+                        //Carácter no permetido
+                        else
+                            error = "Caracter no reconocido ["+i+1+"]";
+                        
+                        break;
+                }
+                i++;        
+            }
+            
+            if(contParIz!=contParDer){
+            
+            error= "ERROR: No hay misma cantidad de parentesis ";
+            
+
+        }
+       
+       
+        if(error.equals(""))
+            return "";
+        else
+            return error;
+        
+    }
+
+    
+
+}
