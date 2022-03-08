@@ -1,0 +1,86 @@
+/*
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
+ */
+package poo;
+import poo.PilaA;
+
+
+public class Calculadora {
+    private String expresion;
+    private double resul;
+  public Calculadora(){
+
+    }
+    public Calculadora(String expresion){
+        this.expresion = expresion;
+    }
+    
+    public boolean texto(){
+        boolean respuesta;
+        int i=0;
+        PilaADT<Character> exp = new PilaA();
+        respuesta = true;
+        while (i<expresion.length() && respuesta){
+            if (expresion.charAt(i) == '(')
+                exp.push(expresion.charAt(i));
+            else
+                if (expresion.charAt(i)== ')')
+                    if (exp.isEmpty())
+                        respuesta = false;
+                    else
+                        exp.pop();
+            i++;
+        }
+        return respuesta;
+    }
+    
+  
+    public String resultado2(){
+        PilaA<String> respu= new PilaA();
+        if (texto()== true){
+            return calcula(ConversorPostfija.invertir(ConversorPostfija.convertirAPostfija(expresion)));
+           
+        }
+        return calcula(ConversorPostfija.invertir(ConversorPostfija.convertirAPostfija(expresion)));
+
+    }
+    public static boolean esOperador(String dato){
+        return dato.equals("+") || dato.equals("-") || dato.equals("*") || dato.equals("/");
+    }
+        
+    public static String calcula(PilaADT<String> expresionPostfija){
+            PilaA<Double> aux = new PilaA();
+            while(!expresionPostfija.isEmpty()){
+                if(esOperador(expresionPostfija.peek()))
+                    switch(expresionPostfija.peek().charAt(0)){
+                        case '+':
+                            aux.push(aux.pop()+aux.pop());
+                            break;
+                        case '-':
+                            aux.push(-aux.pop()+aux.pop());
+                            break;
+                        case '*':
+                            aux.push(aux.pop()*aux.pop());
+                            break;
+                        case '/':
+                            try{
+                                aux.push((1/aux.pop())*aux.pop());
+                            } catch(Exception e){
+                                return "Math Error";
+                            }   
+                            break;
+                    }
+                else{
+                    if(expresionPostfija.peek().charAt(0) == '~')
+                        aux.push(Double.valueOf(expresionPostfija.peek().substring(1))*(-1));
+                    else
+                        aux.push(Double.valueOf(expresionPostfija.peek()));
+                }
+                expresionPostfija.pop();
+            }
+            return String.valueOf(aux.pop());
+        }
+
+
+}
