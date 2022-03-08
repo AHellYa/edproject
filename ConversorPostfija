@@ -1,0 +1,173 @@
+import java.util.ArrayList;
+import pilas_g2.*;
+
+/**
+ * <pre>
+ * Clase ConversorPostfija
+ * </pre>
+ * Esta clase incluye los métodos necesarios para convertir
+ * una expresión matemática de tipo String sintácticamente
+ * correcta y covertirla a una expresión postfija acomodada
+ * en una pila.
+ * @author javier
+ * @version 1.0
+ */
+public class ConversorPostfija {
+    
+    /**
+     * <pre>
+     * Método invertir
+     * </pre>
+     * Este método se utiliza para invertir una pila tipo
+     * PilaADT. Se utiliza para enviar la clase que calcula la pila invertida.
+     * @param pila La pila tipo PilaADT que se desea invertir.
+     * @return Pila tipo PilaA invertirda.
+     */
+    public static PilaA invertir(PilaADT pila){ 
+        PilaA resp = new PilaA();
+        while(!pila.isEmpty())
+            resp.push(pila.pop());
+        return resp;
+    }
+   
+    /**
+     * <pre>
+     * Método expresionAPila
+     * </pre>
+     * Este método toma una expresión matemática en String y
+     * asigna cada valor, paréntesis u operador a una casilla
+     * propia en una pila tipo PilaA. Es auxiliar al método
+     * convertirAPostfija.
+     * @param expresion La expresión matemática en String.
+     * @return Regresa la expresión entrante acomodada en una pila tipo PilaA, con el primer elemento al tope.
+     * @see invertir
+     */
+    public static PilaA expresionAPila(String expresion){
+        PilaA <String> aux = new PilaA();
+        StringBuilder sb = new StringBuilder();
+        for(int i = 0; i < expresion.length(); i++)
+            switch(expresion.charAt(i)){
+                case '+':
+                    if(!sb.toString().isBlank())
+                        aux.push(sb.toString());
+                    sb.setLength(0);
+                    aux.push("+");
+                    break;
+                case '-':
+                    if(!sb.toString().isBlank())
+                        aux.push(sb.toString());
+                    sb.setLength(0);
+                    aux.push("-");
+                    break;
+                case '*':
+                    if(!sb.toString().isBlank())
+                        aux.push(sb.toString());
+                    sb.setLength(0);
+                    aux.push("*");
+                    break;
+                case '/':
+                    if(!sb.toString().isBlank())
+                        aux.push(sb.toString());
+                    sb.setLength(0);
+                    aux.push("/");
+                    break;
+                case '(':
+                    if(!sb.toString().isBlank())
+                        aux.push(sb.toString());
+                    sb.setLength(0);
+                    aux.push("(");
+                    break;
+                case ')':
+                    if(!sb.toString().isBlank())
+                        aux.push(sb.toString());
+                    sb.setLength(0);
+                    aux.push(")");
+                    break;
+                case ' ':
+                    break;
+                default:
+                    sb.append(expresion.charAt(i));
+                    break;
+            }
+        if(!sb.toString().isBlank())
+            aux.push(sb.toString());
+        //invertir(aux);//regresa la pila invertida para ver los datos del primero al último
+        return invertir(aux);
+    }
+    
+    /**
+     * <pre>
+     * Método convertirAPostfija
+     * </pre>
+     * Este método convierte una expresión matemática, infija,
+     * sintácticamente correcta y de tipo String a una expresión
+     * postfija y la acomoda en una pila tipo PilaA.
+     * @param expresion La expresión matemática (sintácticamente correcta y en String) a convertir.
+     * @return Regresa una pila tipo PilaA con un elemento de la expresión postfija en cada casilla. El tope corresponde al primer elemento de la expresión.
+     * @see expresionAPila
+     */
+    public static PilaA convertirAPostfija(String expresion){
+        PilaA<String> exp = expresionAPila(expresion);
+        PilaA<String> resp = new PilaA();
+        PilaA<String> aux = new PilaA();
+        
+        while(!exp.isEmpty()){
+            switch(exp.peek()){
+                case "+":
+                    if(!aux.isEmpty()){
+                        if(aux.peek().equals("+") || aux.peek().equals("-"))
+                            resp.push(aux.pop());
+                        else
+                            if(aux.peek().equals("*") || aux.peek().equals("/"))
+                                while(!aux.isEmpty() && !aux.peek().equals("("))
+                                    resp.push(aux.pop());
+                    }
+                    aux.push("+");
+                    break;
+                case "-":
+                    if(!aux.isEmpty()){
+                        if(aux.peek().equals("+") || aux.peek().equals("-"))
+                            resp.push(aux.pop());
+                        else
+                            if(aux.peek().equals("*") || aux.peek().equals("/"))
+                                while(!aux.isEmpty() && !aux.peek().equals("("))
+                                    resp.push(aux.pop());
+                    }
+                    aux.push("-");
+                    break;
+                case "*":
+                    if(!aux.isEmpty()){
+                        if(aux.peek().equals("*") || aux.peek().equals("/"))
+                            resp.push(aux.pop());
+                    }
+                    aux.push("*");    
+                    break;
+                case "/":
+                    if(!aux.isEmpty()){
+                        if(aux.peek().equals("*") || aux.peek().equals("/"))
+                            resp.push(aux.pop());
+                    }
+                    aux.push("/"); 
+                    break;
+                case "(":
+                    aux.push("(");
+                    break;
+                case ")":
+                    while(aux.peek().equals("("))
+                        resp.push(aux.pop());
+                    aux.pop();
+                    break;
+                default:
+                    resp.push(exp.peek());
+                    break;
+            }
+            exp.pop();
+        }
+        while(!aux.isEmpty())
+            resp.push(aux.pop());
+        return resp;
+    }
+    
+  
+
+}
