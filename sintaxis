@@ -10,7 +10,7 @@ import java.util.Arrays;
    /**
      * Metodo que evalua la sintaxis de una operacion 
      * @author Alexander Hellberg Yanci
-     * @version 1.1
+     * @version 1.0
      * @since 2022-02-28
      * @param String cadena Operacion inserida por usuario
      * @return String error o ""  En caso de error o en caso de ausencia de error
